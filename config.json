@@ -1,13 +1,17 @@
 {
+    "activeDB": "amfmDB",
     "production": false,
     "time_record": false,
     "cache": false,
     "https": false,
     "display_error": true,
     "error_log": "errors.log",
-    "db_alpha": {
+    "amfmDB": {
+        "host": "localhost",
+        "dbname": "amfm",
+        "lendingDB": "lending",
         "username": "root",
-        "password": ""
+        "password": "1b9392ebef12172af18fc10a3192c78997084d1ba1f72497"
     },
-    "revisionID": "27b5d011269c9595afe76beed8666840"
+    "revisionID": "c27de616aeb55b5d9d49f0e4a564a0a5"
 }

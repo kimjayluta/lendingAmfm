@@ -1,110 +1,381 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
-    <a class="navbar-brand" href="#">[LOGO]</a>
 
+{# Include the DashBoard #}
+{% set page = "dash" %}
+{{ include("dashboard/header.twig") }}
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-            <li class="nav-item {{ (page == "profile") ? "active" : "" }}">
-                <a class="nav-link" href="/">Dashboard <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/pending">Pending</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" style="color: #9a9da0; text-decoration: none">
-                    Reports
-                </a>
-                <div class="dropdown-menu">
-                    <a href="#" class="dropdown-item">Collection Sheet</a>
-                    <a href="#" class="dropdown-item">Collection Report</a>
-                    <a href="/payment" class="dropdown-item">Payment Form</a>
-                </div>
-            </li>
-        </ul>
-    </div>
-
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">
-           kim admin
-        </button>
-        <div class="dropdown-menu" style="right: 0; left: auto;">
-            <a href="#" class="dropdown-item">Account Setting</a>
-            <a href="#" class="dropdown-item">Change Password</a>
-            <a href="/logout" class="dropdown-item">Logout</a>
-        </div>
-    </div>
-</nav>
 <!--Table-->
 <div class="container mt-3">
-    <h3 class="text-muted pb-1" style="border-bottom: 1px solid #636c72">Client List</h3>
-    <table id="dataTable" class="table table-striped table-bordered" cellspacing="0">
+    <h3 class="text-muted pb-1" style="border-bottom: 1px solid #636c72">Pending Transactions</h3>
+    <table id="dataTable" class="display" style="width:100%">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Status</th>
-            <th>Type</th>
-            <th style="width: 230px">Actions</th>
+            <th></th>
+            <th>TID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Transaction Type</th>
+            <th></th>
         </tr>
         </thead>
-        <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>kim luta</td>
-                <td>calauag city</td>
-                <td>unpaid</td>
-                <td>binary level</td>
-                <td>
-                    <button class="btn btn-outline-primary mr-2" data-toggle="modal" data-target="#approve">Approve</button>
-                    <button class="btn btn-outline-danger" data-toggle="modal" data-target="#decline" >Decline</button>
-                </td>
-            </tr>
-        </tbody>
+
     </table>
 </div>
 
 <!--Modal Approve-->
-<div class="modal fade" id="approve" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal fade" id="approve" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+		    <div class="modal-header bg-primary">
+			    <span class="text-white">Confirm Action</span>
+			    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				    <span aria-hidden="true">&times;</span>
+			    </button>
+		    </div>
+		    <div class="modal-body">
+			    <h6 class="font-weight-normal">Are you sure to approve this client ?</h6>
+			    <div id="loanAmount">
+			    </div>
+
+
+		    </div>
+		    <div class="modal-footer">
+			    <button type="button" class="btn btn-outline-secondary decline" data-dismiss="modal">Close</button>
+			    <button type="button" class="btn btn-primary approve">Confirm</button>
+		    </div>
+	    </div>
+    </div>
+</div>
+
+<!--Modal Decline-->
+<div class="modal fade" id="decline" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header bg-primary">
+            <div class="modal-header bg-danger">
+                <span class="text-white">Confirm Action</span>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <h6>Are you sure to approve this client ?</h6>
+                <h6 class="font-weight-normal">Are you sure to decline this client ?</h6>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-outline-primary">Approve</button>
+                <button type="button" class="btn btn-outline-secondary decline" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger decline">Decline</button>
             </div>
         </div>
     </div>
 </div>
 
-<!--Modal Decline-->
-<div class="modal fade" id="decline" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-danger">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <h6>Are you sure to decline this client ?</h6>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-outline-danger">Decline</button>
-            </div>
-        </div>
-    </div>
-</div>
+
+<script type="text/javascript">
+	var LoanModel = (function () {
+		function LM() {}
+
+		LM.minLoan = function ($package_type) {
+			switch ($package_type){
+				case "b":
+					return 3000;
+				case "s":
+					return 10000;
+				case "g":
+					return 20000;
+				case "d":
+					return 40000;
+				case "v":
+					return 60000;
+			}
+		}
+
+		LM.maxLoan = function ($package_type) {
+			switch ($package_type){
+				case "b":
+					return 9999;
+				case "s":
+					return 19999;
+				case "g":
+					return 39999;
+				case "d":
+					return 59999;
+				case "v":
+					return "up";
+			}
+		}
+		return LM;
+	})();
+</script>
+
+{# DataTable JavaScript Algorithm #}
+<script type="text/javascript">
+	function tableRow(title, content){
+		return $("<tr/>").append([
+			$("<td/>", {class: "font-weight-bold", text: title}),
+			$("<td/>", {class: "content", text: content})
+		]);
+	}
+
+	/* Formatting function for row details - modify as you need */
+	function tableExpandFormat(d) {
+		{# `d` is the original data object for the row #}
+		var $template = $("<table/>", {cellpadding: 5, cellspacing: 0, border: 0}).css("paddingLeft", "50px");
+		$template.append(tableRow("Client ID:", d.user_id));
+		$template.append(tableRow("Invited by ID:", d.parent_id));
+
+		{# Add this row if the packg type is not null or does exists #}
+		if (d.packg_type){
+			switch (d.packg_type){
+				case "b": d.packg_type = "Bronze";  break;
+				case "s": d.packg_type = "Silver"; break;
+				case "g": d.packg_type = "Gold"; break;
+				case "d": d.packg_type = "Diamond"; break;
+				case "v": d.packg_type = "VIP"; break;
+			}
+			$template.append(tableRow("Package Type:", d.packg_type));
+		}
+		$template.append(tableRow("Address:", d.ad));
+		$template.append(tableRow("Email:", d.email));
+		$template.append(tableRow("Contact Number:", d.cn));
+		$template.append(tableRow("Birth date:", d.bdate));
+		return $template;
+	}
+
+	/**
+	 * Generate
+	 * @returns {jQuery}
+	 */
+	function loanAmountInputFormat($min, $max) {
+		var structure = [
+			'<h5>Enter Loan Amount</h5>',
+			'<div class="form-group">',
+				'<input type="number" min="',$min,'" max="',$max,'" placeholder="Enter Loan Amount between ',
+				$min,' and ',$max, '" class="form-control"/>',
+			'</div>',
+			'<div class="row">',
+				'<div class="col-6 font-weight-bold">Gross Loan:</div>',
+				'<div id="grossLoan" class="col-6 text-right">0</div>',
+			'</div>',
+			'<div class="row">',
+				'<div class="col-6 font-weight-bold">Monthly Due:</div>',
+				'<div id="monthlyDue" class="col-6 text-right">0</div>',
+			'</div>',
+			'<div class="row">',
+				'<div class="col-6 font-weight-bold">Maturity Date:</div>',
+				'<div id="maturityDate" class="col-6 text-right">',getMaturityDate(),'</div>',
+			'</div>'
+		];
+
+		return $(structure.join(''));
+	}
+	
+	function getMaturityDate() {
+		return new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toLocaleDateString("en-US");
+	}
+
+	function getGrossLoan(loanAmount){
+		return ((0.05 * 12) + 1) * loanAmount;
+	}
+
+	// Initialize the dataTable functionality
+	var table = $('#dataTable').DataTable({
+		"processing": true, "serverSide": true, "responsive": true,
+		"ajax": {
+			url :"/", type: "POST"
+		},
+		"columns": [
+            {
+                "className": 'info-control',
+                "orderable": false,
+                "data": null,
+                "defaultContent": ''
+            }, {
+            	"data": "id"
+            }, {
+			    "data": "fn"
+            },{
+			    "data": "ln"
+            }, {
+			    "data": "type"
+            }, {
+            	"data": "action",
+                "orderable":false,
+                "targets": -1,
+                "data": null,
+                "defaultContent":
+                    "<button class='mr-1 approve btn btn-outline-primary' data-toggle='modal' data-target='#approve'>Approve</button>"+
+                    "<button class='mr-1 decline btn btn-danger' data-toggle='modal' data-target='#decline'>Decline</button>"
+		    }
+        ],
+		"order": [[ 1, "desc" ]],
+		language: {
+			paginate: {
+				previous: "&#171;", next: "&#187;"
+			}
+		}
+	});
+
+	// When the approve button is clicked
+	$('#dataTable tbody').on( 'click', 'button.approve', function () {
+		var data = table.row( $(this).parents('tr') ).data();
+
+		// Change the data id as the target within the confirmation modal
+		var ModalApproveBtn = $("#approve").find("button.approve");
+		var ModalLoanAmount = $("#loanAmount");
+
+		ModalApproveBtn.attr("data-id", data["id"]);
+		ModalApproveBtn.attr("data-user_id", data["user_id"]);
+		ModalApproveBtn.attr("data-parent_id", data["parent_id"]);
+		ModalApproveBtn.attr("data-type", data["type"]);
+		ModalApproveBtn.attr("data-packg_type", data["packg_type"]);
+
+		/**
+		 * There will be loan amount input when the transaction is a unilevel
+		 */
+		if (data["type"] === "unilevel"){
+			ModalLoanAmount.html(
+				loanAmountInputFormat(
+					LoanModel.minLoan(data["packg_type"]),
+					LoanModel.maxLoan(data["packg_type"])
+				)
+			);
+
+			// Automated GrossLoan Computation
+			ModalLoanAmount.find("input").on("keypress, keyup", function () {
+				var self = $(this);
+				if (self.val() > 0){
+					var grossAmount = getGrossLoan(self.val());
+
+					$("#grossLoan").text(Math.round(grossAmount * 100) / 100);
+					$("#monthlyDue").text(Math.round((grossAmount/12) * 100) / 100);
+				}else{
+					$("#grossLoan").val(0)
+					$("#monthlyDue").val(0)
+				}
+			});
+		}else{
+			ModalLoanAmount.html("");
+		}
+	});
+
+	// When the decline button is clicked
+	$('#dataTable tbody').on( 'click', 'button.decline', function () {
+		var data = table.row( $(this).parents('tr') ).data();
+
+		// Change the data id as the target within the confirmation modal
+        var ModalDeclineBtn = $("#decline").find("button.decline");
+		ModalDeclineBtn.attr("data-id", data["id"]);
+	} );
+
+
+	// Add event listener for opening and closing details
+	$('#dataTable tbody').on('click', 'td.info-control', function () {
+		var tr = $(this).closest('tr');
+		var row = table.row( tr );
+
+		if ( row.child.isShown() ) {
+			// This row is already open - close it
+			row.child.hide();
+			tr.removeClass('shown');
+		}
+		else {
+			// Open this row
+			row.child( tableExpandFormat(row.data()) ).show();
+			tr.addClass('shown');
+		}
+	} );
+</script>
+
+{# Modal Javascript Algorithm #}
+<script type="text/javascript">
+    function errorMethod() {
+	    {# Show the Server Error #}
+	    alert("Server Error: An internet connection distortion occur while trying to send your request. Please try again later");
+    }
+
+    $("#decline .decline").on("click", function () {
+	    var dataID = $(this).data("id");
+
+	    {# Ajax Request to the binary request #}
+	    var JQXHR = $.ajax({
+		    url: "/",
+		    type: "POST",
+		    data: {"decline": dataID},
+		    beforeSend: function () {
+		    	// Sending Please wait...
+		    }
+	    })
+
+	    {# Get the server response when the request is successful  #}
+	    JQXHR.done(function(data){
+	    	// refresh page
+		    if (data == "1"){
+			    location.href = "/";
+			    return;
+		    }
+
+		    {# Show server error message #}
+		    errorMethod();
+	    });
+
+	    JQXHR.fail(errorMethod);
+    });
+
+    $("#approve .approve").on("click", function () {
+        var dataID = $(this).attr("data-id");
+        var dataType = $(this).attr("data-type");
+        var userID = $(this).attr("data-user_id");
+        var parentID = $(this).attr("data-parent_id");
+        var package_type = $(this).attr("data-packg_type");
+
+	    var loanAmount, min, max;
+	    if (dataType === "unilevel"){
+	        loanAmount = $(this).parents(".modal-content").find("#loanAmount input").val();
+
+		    min = LoanModel.minLoan(package_type);
+		    max = LoanModel.maxLoan(package_type);
+
+	        if (!(loanAmount > 0) || loanAmount.length < 1){
+	        	alert("Loan Amount is required");
+	        	return;
+	        }
+
+	        if (loanAmount < min || (loanAmount !== "up" && loanAmount > max)){
+	        	alert("Choose Loan Amount between "+min+" and "+max+" only. Thank you.");
+	        	return;
+	        }
+
+        }else{
+	    	loanAmount = undefined;
+	    }
+
+	    {# Ajax Request to the binary request #}
+	    var JQXHR = $.ajax({
+		    url: "/",
+		    type: "POST",
+		    data: {
+		    	"approve": dataID,
+		    	"type": dataType,
+			    "user_id": userID,
+			    "parent_id": parentID,
+			    "package_type": package_type,
+			    "loan_amount": loanAmount
+		    },
+		    beforeSend: function () {
+			    // Sending Please wait...
+		    }
+	    })
+
+	    {# Get the server response when the request is successful  #}
+	    JQXHR.done(function(data){
+		    // refresh page
+		    if (data == "1"){
+			    location.href = "/";
+			    return;
+		    }
+
+		    {# Show server error message #}
+		    errorMethod();
+	    });
+
+	    JQXHR.fail(errorMethod);
+    });
+</script>

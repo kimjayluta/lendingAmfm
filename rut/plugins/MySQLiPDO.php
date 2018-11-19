@@ -30,9 +30,9 @@ class MySQLiPDO {
 
     public function mysqli_insert_id(PDO $connection, string $name = NULL){
         if ($name != NULL){
-            $connection->lastInsertId($name);
+            return $connection->lastInsertId($name);
         }else{
-            $connection->lastInsertId();
+            return $connection->lastInsertId();
         }
 
     }

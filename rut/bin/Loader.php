@@ -16,7 +16,6 @@ if ($errorReport){
     // Override the default error handler behavior
     set_exception_handler(function($exception) {
         error_log($exception);
-        error_page("Something went wrong!");
     });
 }
 if ($recordTime){ Plugins\RecordTime::start(); }

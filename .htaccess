@@ -51,6 +51,7 @@ RewriteCond %{ENV:REDIRECT_STATUS} ^$
 RewriteRule ^js/(.*)$ /public/js/$1 [L,QSA]
 RewriteRule ^css/(.*)$ /public/css/$1 [L,QSA]
 RewriteRule ^fonts/(.*)$ /public/fonts/$1 [L,QSA]
+RewriteRule ^images/(.*)$ /public/images/$1 [L,QSA]
 
 # Make Sure that the file does not exists
 RewriteCond %{REQUEST_FILENAME} !-f
